@@ -101,9 +101,8 @@ class _InputTabState extends State<InputTab> {
                 );
                 egg.add(data);
                 formkey.currentState?.reset();
-                tanggalController.text = "";
-                noKandangController.text = "";
-                jumlahController.text = "";
+
+                DefaultTabController.of(context).animateTo(1);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue[600],
