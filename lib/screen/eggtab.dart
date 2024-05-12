@@ -12,8 +12,8 @@ class EggTab extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       child: HorizontalDataTable(
-        leftHandSideColumnWidth: 70,
-        rightHandSideColumnWidth: 400,
+        leftHandSideColumnWidth: 100,
+        rightHandSideColumnWidth: 900,
         isFixedHeader: true,
         headerWidgets: _getHeaderWidget(),
         itemCount: egg.getLen(),
@@ -24,11 +24,11 @@ class EggTab extends StatelessWidget {
         ),
         leftSideItemBuilder: (context, index) {
           return Container(
-            width: 70,
+            width: 100,
             height: 40,
             padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
             alignment: Alignment.centerLeft,
-            child: Text(egg.items[index].id.toString()),
+            child: Text(egg.items[index].tanggal.toString()),
           );
         },
         rightSideItemBuilder: (context, index) {
@@ -39,14 +39,56 @@ class EggTab extends StatelessWidget {
                 height: 40,
                 padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
                 alignment: Alignment.centerLeft,
-                child: Text(egg.items[index].tanggal.toString()),
+                child: Text(egg.items[index].k1.toString()),
               ),
               Container(
                 width: 100,
                 height: 40,
                 padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
                 alignment: Alignment.centerLeft,
-                child: Text(egg.items[index].noKandang.toString()),
+                child: Text(egg.items[index].k2.toString()),
+              ),
+              Container(
+                width: 100,
+                height: 40,
+                padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                alignment: Alignment.centerLeft,
+                child: Text(egg.items[index].k3.toString()),
+              ),
+              Container(
+                width: 100,
+                height: 40,
+                padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                alignment: Alignment.centerLeft,
+                child: Text(egg.items[index].k4.toString()),
+              ),
+              Container(
+                width: 100,
+                height: 40,
+                padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                alignment: Alignment.centerLeft,
+                child: Text(egg.items[index].k5.toString()),
+              ),
+              Container(
+                width: 100,
+                height: 40,
+                padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                alignment: Alignment.centerLeft,
+                child: Text(egg.items[index].k6.toString()),
+              ),
+              Container(
+                width: 100,
+                height: 40,
+                padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                alignment: Alignment.centerLeft,
+                child: Text(egg.items[index].k7.toString()),
+              ),
+              Container(
+                width: 100,
+                height: 40,
+                padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                alignment: Alignment.centerLeft,
+                child: Text(egg.items[index].k8.toString()),
               ),
               Container(
                 width: 100,
@@ -67,9 +109,15 @@ class EggTab extends StatelessWidget {
 
   List<Widget> _getHeaderWidget() {
     return [
-      _getTitleItemWidget("No", 70),
       _getTitleItemWidget("Tanggal", 100),
-      _getTitleItemWidget("No Kandang", 100),
+      _getTitleItemWidget("K1", 100),
+      _getTitleItemWidget("K2", 100),
+      _getTitleItemWidget("K3", 100),
+      _getTitleItemWidget("K4", 100),
+      _getTitleItemWidget("K5", 100),
+      _getTitleItemWidget("K6", 100),
+      _getTitleItemWidget("K7", 100),
+      _getTitleItemWidget("K8", 100),
       _getTitleItemWidget("Jumlah", 70),
     ];
   }

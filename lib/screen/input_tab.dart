@@ -10,16 +10,35 @@ class InputTab extends StatefulWidget {
   State<InputTab> createState() => _InputTabState();
 }
 
+enum EggLabel {
+  satu('K1', 1),
+  dua('K2', 2),
+  tiga('K3', 3),
+  empat('K4', 4),
+  lima('K5', 5),
+  enam('K6', 6),
+  tujuh('K7', 7),
+  lapan('K8', 8);
+
+  const EggLabel(this.label, this.val);
+  final String label;
+  final int val;
+}
+
 class _InputTabState extends State<InputTab> {
   final noKandangController = TextEditingController();
   final tanggalController = TextEditingController();
   final jumlahController = TextEditingController();
+  final testDropdownController = TextEditingController();
+
+  EggLabel? selectedDropDown;
 
   @override
   void dispose() {
     noKandangController.dispose();
     jumlahController.dispose();
     tanggalController.dispose();
+    testDropdownController.dispose();
     super.dispose();
   }
 
@@ -35,14 +54,25 @@ class _InputTabState extends State<InputTab> {
           children: [
             SizedBox(
               width: 200,
-              child: TextFormField(
-                controller: noKandangController,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  icon: Icon(Icons.numbers),
-                  hintText: "1-8",
-                  labelText: "No Kandang",
+              child: DropdownMenu<EggLabel>(
+                controller: testDropdownController,
+                leadingIcon: const Icon(Icons.egg),
+                label: const Text("Kandang"),
+                initialSelection: EggLabel.satu,
+                onSelected: (EggLabel? egg) {
+                  setState(() {
+                    selectedDropDown = egg;
+                  });
+                },
+                inputDecorationTheme: const InputDecorationTheme(
+                  outlineBorder: BorderSide.none,
                 ),
+                expandedInsets: EdgeInsets.zero,
+                dropdownMenuEntries: EggLabel.values
+                    .map<DropdownMenuEntry<EggLabel>>((EggLabel egg) {
+                  return DropdownMenuEntry<EggLabel>(
+                      value: egg, label: egg.label);
+                }).toList(),
               ),
             ),
             const SizedBox(
@@ -93,12 +123,17 @@ class _InputTabState extends State<InputTab> {
             ),
             ElevatedButton(
               onPressed: () {
-                Item data = Item(
-                  id: egg.getId(),
-                  tanggal: tanggalController.text,
-                  noKandang: int.tryParse(noKandangController.text) ?? 0,
-                  jumlah: int.tryParse(jumlahController.text) ?? 0,
-                );
+                var tanggal = tanggalController.text;
+                var jumlah = int.tryParse(jumlahController.text) ?? 0;
+                Item data;
+                data = egg.ambilByTanggal(tanggal);
+
+                data = data.updateWith(
+                    id: data.id,
+                    tanggal: tanggal,
+                    nokan: selectedDropDown?.val ?? 1,
+                    juml: jumlah);
+                egg.remove(data);
                 egg.add(data);
                 formkey.currentState?.reset();
 
@@ -109,6 +144,7 @@ class _InputTabState extends State<InputTab> {
               ),
               child: const Text("Submit"),
             ),
+            Text(selectedDropDown?.val.toString() ?? "")
           ],
         ),
       ),
