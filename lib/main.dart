@@ -1,24 +1,26 @@
-import 'package:duckyegg/models/egg.dart';
+import 'package:duckyegg/database/eggdatabase.dart';
 import 'package:duckyegg/screen/home.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MyApp());
+
+  final database = AppDatabase();
+
+  runApp(MyApp(
+    databasee: database,
+  ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({required this.databasee, super.key});
+
+  final AppDatabase databasee;
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<EggTable>(
-          create: (context) => EggTable(),
-        ),
-      ],
+    return ProviderScope(
       child: MaterialApp(
         title: "DuckEgg",
         theme: ThemeData(
@@ -27,7 +29,9 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(
                 seedColor: Colors.lightBlueAccent,
                 brightness: Brightness.dark)),
-        home: const HomePage(),
+        home: HomePage(
+          databasee: databasee,
+        ),
       ),
     );
   }

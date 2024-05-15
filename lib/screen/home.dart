@@ -1,9 +1,12 @@
+import 'package:duckyegg/database/eggdatabase.dart';
 import 'package:duckyegg/screen/eggtab.dart';
 import 'package:duckyegg/screen/input_tab.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  const HomePage({required this.databasee, super.key});
+
+  final AppDatabase databasee;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +39,7 @@ class HomePage extends StatelessWidget {
             Placeholder(
               color: Colors.blue,
             ),
-            EggTab(),
+            EggView(),
             InputTab(),
           ],
         ),

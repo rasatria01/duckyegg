@@ -1,110 +1,131 @@
-import 'package:duckyegg/models/egg.dart';
+import 'package:duckyegg/database/eggdatabase.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:horizontal_data_table/horizontal_data_table.dart';
-import 'package:provider/provider.dart';
 
-class EggTab extends StatelessWidget {
-  const EggTab({super.key});
+class EggView extends ConsumerStatefulWidget {
+  const EggView({super.key});
+
+  @override
+  ConsumerState<EggView> createState() => _EggViewState();
+}
+
+class _EggViewState extends ConsumerState<EggView> {
+  final eggStream = StreamProvider((ref) {
+    final database = ref.watch(AppDatabase.provider);
+
+    return database.watchAllEgg();
+  });
 
   @override
   Widget build(BuildContext context) {
-    var egg = context.watch<EggTable>();
+    final currentEgg = ref.watch(eggStream);
     return Container(
-      padding: const EdgeInsets.all(12),
-      child: HorizontalDataTable(
-        leftHandSideColumnWidth: 100,
-        rightHandSideColumnWidth: 900,
-        isFixedHeader: true,
-        headerWidgets: _getHeaderWidget(),
-        itemCount: egg.getLen(),
-        rowSeparatorWidget: const Divider(
-          color: Colors.white70,
-          height: 1.0,
-          thickness: 0.0,
-        ),
-        leftSideItemBuilder: (context, index) {
-          return Container(
-            width: 100,
-            height: 40,
-            padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-            alignment: Alignment.centerLeft,
-            child: Text(egg.items[index].tanggal.toString()),
-          );
-        },
-        rightSideItemBuilder: (context, index) {
-          return Row(
-            children: [
-              Container(
-                width: 100,
-                height: 40,
-                padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                alignment: Alignment.centerLeft,
-                child: Text(egg.items[index].k1.toString()),
-              ),
-              Container(
-                width: 100,
-                height: 40,
-                padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                alignment: Alignment.centerLeft,
-                child: Text(egg.items[index].k2.toString()),
-              ),
-              Container(
-                width: 100,
-                height: 40,
-                padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                alignment: Alignment.centerLeft,
-                child: Text(egg.items[index].k3.toString()),
-              ),
-              Container(
-                width: 100,
-                height: 40,
-                padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                alignment: Alignment.centerLeft,
-                child: Text(egg.items[index].k4.toString()),
-              ),
-              Container(
-                width: 100,
-                height: 40,
-                padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                alignment: Alignment.centerLeft,
-                child: Text(egg.items[index].k5.toString()),
-              ),
-              Container(
-                width: 100,
-                height: 40,
-                padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                alignment: Alignment.centerLeft,
-                child: Text(egg.items[index].k6.toString()),
-              ),
-              Container(
-                width: 100,
-                height: 40,
-                padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                alignment: Alignment.centerLeft,
-                child: Text(egg.items[index].k7.toString()),
-              ),
-              Container(
-                width: 100,
-                height: 40,
-                padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                alignment: Alignment.centerLeft,
-                child: Text(egg.items[index].k8.toString()),
-              ),
-              Container(
-                width: 100,
-                height: 40,
-                padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                alignment: Alignment.centerLeft,
-                child: Text(egg.items[index].jumlah.toString()),
-              ),
-            ],
-          );
-        },
-        leftHandSideColBackgroundColor: Colors.grey[900]!,
-        rightHandSideColBackgroundColor:
-            Theme.of(context).colorScheme.background,
-      ),
-    );
+        padding: const EdgeInsets.all(12),
+        child: currentEgg.when(
+            data: (eggItems) {
+              return HorizontalDataTable(
+                leftHandSideColumnWidth: 100,
+                rightHandSideColumnWidth: 900,
+                isFixedHeader: true,
+                headerWidgets: _getHeaderWidget(),
+                itemCount: eggItems.length,
+                rowSeparatorWidget: const Divider(
+                  color: Colors.white70,
+                  height: 1.0,
+                  thickness: 0.0,
+                ),
+                leftSideItemBuilder: (context, index) {
+                  return Container(
+                    width: 100,
+                    height: 40,
+                    padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                    alignment: Alignment.centerLeft,
+                    child: Text(eggItems[index].tanggal.toString()),
+                  );
+                },
+                rightSideItemBuilder: (context, index) {
+                  return Row(
+                    children: [
+                      Container(
+                        width: 100,
+                        height: 40,
+                        padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                        alignment: Alignment.centerLeft,
+                        child: Text(eggItems[index].k1.toString()),
+                      ),
+                      Container(
+                        width: 100,
+                        height: 40,
+                        padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                        alignment: Alignment.centerLeft,
+                        child: Text(eggItems[index].k2.toString()),
+                      ),
+                      Container(
+                        width: 100,
+                        height: 40,
+                        padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                        alignment: Alignment.centerLeft,
+                        child: Text(eggItems[index].k3.toString()),
+                      ),
+                      Container(
+                        width: 100,
+                        height: 40,
+                        padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                        alignment: Alignment.centerLeft,
+                        child: Text(eggItems[index].k4.toString()),
+                      ),
+                      Container(
+                        width: 100,
+                        height: 40,
+                        padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                        alignment: Alignment.centerLeft,
+                        child: Text(eggItems[index].k5.toString()),
+                      ),
+                      Container(
+                        width: 100,
+                        height: 40,
+                        padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                        alignment: Alignment.centerLeft,
+                        child: Text(eggItems[index].k6.toString()),
+                      ),
+                      Container(
+                        width: 100,
+                        height: 40,
+                        padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                        alignment: Alignment.centerLeft,
+                        child: Text(eggItems[index].k7.toString()),
+                      ),
+                      Container(
+                        width: 100,
+                        height: 40,
+                        padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                        alignment: Alignment.centerLeft,
+                        child: Text(eggItems[index].k8.toString()),
+                      ),
+                      Container(
+                        width: 100,
+                        height: 40,
+                        padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                        alignment: Alignment.centerLeft,
+                        child: Text(eggItems[index].jumlah.toString()),
+                      ),
+                    ],
+                  );
+                },
+                leftHandSideColBackgroundColor: Colors.grey[900]!,
+                rightHandSideColBackgroundColor:
+                    Theme.of(context).colorScheme.background,
+              );
+            },
+            error: ((error, stackTrace) {
+              debugPrintStack(label: error.toString(), stackTrace: stackTrace);
+              return const Text("an error occured");
+            }),
+            loading: () => const Align(
+                  alignment: Alignment.center,
+                  child: CircularProgressIndicator(),
+                )));
   }
 
   List<Widget> _getHeaderWidget() {
