@@ -2,6 +2,7 @@ import 'package:duckyegg/database/eggdatabase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:horizontal_data_table/horizontal_data_table.dart';
+import 'package:intl/intl.dart';
 
 class EggView extends ConsumerStatefulWidget {
   const EggView({super.key});
@@ -41,7 +42,8 @@ class _EggViewState extends ConsumerState<EggView> {
                     height: 40,
                     padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
                     alignment: Alignment.centerLeft,
-                    child: Text(eggItems[index].tanggal.toString()),
+                    child: Text(DateFormat("dd/MM/yyyy")
+                        .format(eggItems[index].tanggal)),
                   );
                 },
                 rightSideItemBuilder: (context, index) {
@@ -120,7 +122,12 @@ class _EggViewState extends ConsumerState<EggView> {
             },
             error: ((error, stackTrace) {
               debugPrintStack(label: error.toString(), stackTrace: stackTrace);
-              return const Text("an error occured");
+              return Column(
+                children: [
+                  const Text("an error occured"),
+                  Text(error.toString()),
+                ],
+              );
             }),
             loading: () => const Align(
                   alignment: Alignment.center,

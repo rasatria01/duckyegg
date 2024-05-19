@@ -31,7 +31,13 @@ class _InputTabState extends ConsumerState<InputTab> {
   final jumlahController = TextEditingController();
   final testDropdownController = TextEditingController();
 
-  EggLabel? selectedDropDown;
+  late EggLabel? selectedDropDown;
+
+  @override
+  void initState() {
+    selectedDropDown = EggLabel.satu;
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -62,30 +68,93 @@ class _InputTabState extends ConsumerState<InputTab> {
       EggDabaseData? items = await database.findEgg(tanggalController.text);
       final updatedVal = int.tryParse(jumlahController.text) ?? 0;
       if (items != null) {
-        final jumlah = updatedVal + items.jumlah;
         switch (selectedDropDown?.val) {
           case 1:
+            final int jumlah = updatedVal +
+                items.k2 +
+                items.k3 +
+                items.k4 +
+                items.k5 +
+                items.k6 +
+                items.k7 +
+                items.k8;
             items = items.copyWith(k1: updatedVal, jumlah: jumlah);
             break;
           case 2:
+            final int jumlah = updatedVal +
+                items.k1 +
+                items.k3 +
+                items.k4 +
+                items.k5 +
+                items.k6 +
+                items.k7 +
+                items.k8;
             items = items.copyWith(k2: updatedVal, jumlah: jumlah);
             break;
           case 3:
+            final int jumlah = updatedVal +
+                items.k2 +
+                items.k1 +
+                items.k4 +
+                items.k5 +
+                items.k6 +
+                items.k7 +
+                items.k8;
             items = items.copyWith(k3: updatedVal, jumlah: jumlah);
             break;
           case 4:
+            final int jumlah = updatedVal +
+                items.k2 +
+                items.k3 +
+                items.k1 +
+                items.k5 +
+                items.k6 +
+                items.k7 +
+                items.k8;
             items = items.copyWith(k4: updatedVal, jumlah: jumlah);
             break;
           case 5:
+            final int jumlah = updatedVal +
+                items.k2 +
+                items.k3 +
+                items.k4 +
+                items.k1 +
+                items.k6 +
+                items.k7 +
+                items.k8;
             items = items.copyWith(k5: updatedVal, jumlah: jumlah);
             break;
           case 6:
+            final int jumlah = updatedVal +
+                items.k2 +
+                items.k3 +
+                items.k4 +
+                items.k5 +
+                items.k1 +
+                items.k7 +
+                items.k8;
             items = items.copyWith(k6: updatedVal, jumlah: jumlah);
             break;
           case 7:
+            final int jumlah = updatedVal +
+                items.k2 +
+                items.k3 +
+                items.k4 +
+                items.k5 +
+                items.k6 +
+                items.k1 +
+                items.k8;
             items = items.copyWith(k7: updatedVal, jumlah: jumlah);
             break;
           case 8:
+            final int jumlah = updatedVal +
+                items.k2 +
+                items.k3 +
+                items.k4 +
+                items.k5 +
+                items.k6 +
+                items.k7 +
+                items.k1;
             items = items.copyWith(k8: updatedVal, jumlah: jumlah);
             break;
           default:
@@ -104,28 +173,39 @@ class _InputTabState extends ConsumerState<InputTab> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
-              width: 200,
-              child: DropdownMenu<EggLabel>(
-                controller: testDropdownController,
-                leadingIcon: const Icon(Icons.egg),
-                label: const Text("Kandang"),
-                initialSelection: EggLabel.satu,
-                onSelected: (EggLabel? egg) {
-                  setState(() {
-                    selectedDropDown = egg;
-                  });
-                },
-                inputDecorationTheme: const InputDecorationTheme(
-                  outlineBorder: BorderSide.none,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(
+                  width: 24,
+                  child: Icon(Icons.numbers),
                 ),
-                expandedInsets: EdgeInsets.zero,
-                dropdownMenuEntries: EggLabel.values
-                    .map<DropdownMenuEntry<EggLabel>>((EggLabel egg) {
-                  return DropdownMenuEntry<EggLabel>(
-                      value: egg, label: egg.label);
-                }).toList(),
-              ),
+                const SizedBox(
+                  width: 14,
+                ),
+                SizedBox(
+                  width: 160,
+                  child: DropdownMenu<EggLabel>(
+                    controller: testDropdownController,
+                    initialSelection: selectedDropDown,
+                    label: const Text("Kandang"),
+                    onSelected: (egg) {
+                      setState(() {
+                        selectedDropDown = egg;
+                      });
+                    },
+                    inputDecorationTheme: const InputDecorationTheme(
+                      outlineBorder: BorderSide.none,
+                    ),
+                    expandedInsets: EdgeInsets.zero,
+                    dropdownMenuEntries: EggLabel.values
+                        .map<DropdownMenuEntry<EggLabel>>((EggLabel egg) {
+                      return DropdownMenuEntry<EggLabel>(
+                          value: egg, label: egg.label);
+                    }).toList(),
+                  ),
+                ),
+              ],
             ),
             const SizedBox(
               height: 24,
@@ -184,7 +264,6 @@ class _InputTabState extends ConsumerState<InputTab> {
               ),
               child: const Text("Submit"),
             ),
-            Text(selectedDropDown?.val.toString() ?? "")
           ],
         ),
       ),

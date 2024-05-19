@@ -1,4 +1,3 @@
-import 'package:duckyegg/database/eggdatabase.dart';
 import 'package:duckyegg/screen/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,17 +5,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final database = AppDatabase();
-
-  runApp(MyApp(
-    databasee: database,
-  ));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({required this.databasee, super.key});
-
-  final AppDatabase databasee;
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +22,7 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(
                 seedColor: Colors.lightBlueAccent,
                 brightness: Brightness.dark)),
-        home: HomePage(
-          databasee: databasee,
-        ),
+        home: const HomePage(),
       ),
     );
   }

@@ -39,7 +39,7 @@ class AppDatabase extends _$AppDatabase {
           await batch((batch) {
             batch.insertAll(eggDabase, [
               EggDabaseCompanion.insert(
-                  tanggal: DateTime.parse("14/05/2024"),
+                  tanggal: DateTime(2024, 5, 14),
                   k1: 21,
                   k2: 36,
                   k3: 54,
@@ -50,7 +50,7 @@ class AppDatabase extends _$AppDatabase {
                   k8: 0,
                   jumlah: 255),
               EggDabaseCompanion.insert(
-                  tanggal: DateTime.parse("15/05/2024"),
+                  tanggal: DateTime(2024, 5, 15),
                   k1: 22,
                   k2: 35,
                   k3: 50,
