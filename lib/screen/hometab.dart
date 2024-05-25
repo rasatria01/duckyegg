@@ -11,8 +11,8 @@ class HomeTab extends ConsumerStatefulWidget {
 }
 
 enum Choice {
-  satu('Chart PerKandang', 1),
-  dua('Chart Jumlah', 2);
+  satu('by Pen Chart', 1),
+  dua('Sum Per Day Chart', 2);
 
   const Choice(this.label, this.val);
   final String label;
@@ -60,10 +60,6 @@ class _HomeTabState extends ConsumerState<HomeTab> {
           const SizedBox(
             height: 16,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: _selectedChoice?.val == 1 ? choiceKandang : choiceJumlah,
-          ),
           Expanded(
             child: currentEgg.when(
               data: (newEgg) {
@@ -95,43 +91,5 @@ class _HomeTabState extends ConsumerState<HomeTab> {
         ],
       ),
     );
-  }
-
-  List<Widget> get choiceJumlah {
-    return [cardData(Colors.cyan, "Sum")];
-  }
-
-  Widget cardData(Color color, String text) {
-    return Card(
-      color: Colors.blueGrey.withOpacity(0.5),
-      child: SizedBox(
-        width: 50,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              width: 12,
-              height: 12,
-              color: color,
-            ),
-            const SizedBox(
-              width: 5,
-            ),
-            Text(text)
-          ],
-        ),
-      ),
-    );
-  }
-
-  List<Widget> get choiceKandang {
-    return [
-      cardData(Colors.cyan, "K1"),
-      cardData(Colors.yellow, "K2"),
-      cardData(Colors.red, "K3"),
-      cardData(Colors.green, "K4"),
-      cardData(Colors.white, "K5"),
-      cardData(Colors.purple, "K6"),
-    ];
   }
 }

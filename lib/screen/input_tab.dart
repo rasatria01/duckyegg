@@ -188,7 +188,7 @@ class _InputTabState extends ConsumerState<InputTab> {
                   child: DropdownMenu<EggLabel>(
                     controller: testDropdownController,
                     initialSelection: selectedDropDown,
-                    label: const Text("Kandang"),
+                    label: const Text("Pen"),
                     onSelected: (egg) {
                       setState(() {
                         selectedDropDown = egg;
@@ -217,9 +217,15 @@ class _InputTabState extends ConsumerState<InputTab> {
                 controller: jumlahController,
                 decoration: const InputDecoration(
                   icon: Icon(Icons.egg),
-                  hintText: "Jumlah",
+                  hintText: "Total Egg ",
                   labelText: "Egg Count ",
                 ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Do not leave empty';
+                  }
+                  return null;
+                },
               ),
             ),
             const SizedBox(
@@ -247,6 +253,12 @@ class _InputTabState extends ConsumerState<InputTab> {
                     });
                   }
                 },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Do not leave empty';
+                  }
+                  return null;
+                },
               ),
             ),
             const SizedBox(
@@ -254,10 +266,10 @@ class _InputTabState extends ConsumerState<InputTab> {
             ),
             ElevatedButton(
               onPressed: () {
-                formkey.currentState?.reset();
-
-                _addEgg();
-                DefaultTabController.of(context).animateTo(1);
+                if (formkey.currentState!.validate()) {
+                  _addEgg();
+                  DefaultTabController.of(context).animateTo(1);
+                }
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue[600],

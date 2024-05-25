@@ -137,7 +137,7 @@ class _EggViewState extends ConsumerState<EggView> {
 
   List<Widget> _getHeaderWidget() {
     return [
-      _getTitleItemWidget("Tanggal", 100),
+      _getTitleItemWidget("Date", 100),
       _getTitleItemWidget("K1", 100),
       _getTitleItemWidget("K2", 100),
       _getTitleItemWidget("K3", 100),
@@ -146,7 +146,7 @@ class _EggViewState extends ConsumerState<EggView> {
       _getTitleItemWidget("K6", 100),
       _getTitleItemWidget("K7", 100),
       _getTitleItemWidget("K8", 100),
-      _getTitleItemWidget("Jumlah", 70),
+      _getTitleItemWidget("Sum", 70),
     ];
   }
 
